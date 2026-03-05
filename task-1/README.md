@@ -9,7 +9,7 @@ A REST service that accepts shell scripts, runs them inside isolated Docker cont
 3. Your script runs inside it
 4. You can poll the execution status: `QUEUED → IN_PROGRESS → FINISHED`
 
-Docker acts as the remote executor — each execution gets its own container, which is created on demand, used, then removed.
+Docker acts as the remote executor - each execution gets its own container, which is created on demand, used, then removed.
 
 ## Prerequisites
 
