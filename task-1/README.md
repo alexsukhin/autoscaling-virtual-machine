@@ -11,15 +11,11 @@ A REST service that accepts shell scripts, runs them inside isolated Docker cont
 
 Docker acts as the remote executor — each execution gets its own container, which is created on demand, used, then removed.
 
----
-
 ## Prerequisites
 
 - Java 21+
 - Maven 3.8+
 - Docker Engine
-
----
 
 ## Setup
 
@@ -124,8 +120,6 @@ Returns the execution including current `status`, `output`, and `error`.
 ```
 GET /executions
 ```
-
----
 
 ## Example
 
