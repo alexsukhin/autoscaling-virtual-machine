@@ -9,17 +9,13 @@ A REST service that accepts shell scripts, runs them inside isolated Docker cont
 3. Your script runs inside it
 4. You can poll the execution status: `QUEUED → IN_PROGRESS → FINISHED`
 
-Docker acts as the remote executor — each execution gets its own container, which is created on demand, used, then removed.
-
----
+Docker acts as the remote executor - each execution gets its own container, which is created on demand, used, then removed.
 
 ## Prerequisites
 
 - Java 21+
 - Maven 3.8+
 - Docker Engine
-
----
 
 ## Setup
 
@@ -38,7 +34,20 @@ sudo apt install maven
 ### Install Docker
 
 ```bash
-sudo apt install docker-ce docker-ce-cli containerd.io
+sudo apt-get update
+sudo apt-get install ca-certificates curl
+sudo install -m 0755 -d /etc/apt/keyrings
+sudo curl -fsSL https://download.docker.com/linux/ubuntu/gpg -o /etc/apt/keyrings/docker.asc
+sudo chmod a+r /etc/apt/keyrings/docker.asc
+
+echo \
+  "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/ubuntu \
+  $(. /etc/os-release && echo "$VERSION_CODENAME") stable" | \
+  sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+
+sudo apt-get update
+sudo apt-get install docker-ce docker-ce-cli containerd.io
+
 sudo usermod -aG docker $USER
 newgrp docker
 ```
@@ -66,8 +75,6 @@ sudo systemctl daemon-reload
 sudo systemctl restart docker
 ```
 
----
-
 ## Running
 
 ```bash
@@ -75,8 +82,6 @@ mvn spring-boot:run
 ```
 
 The service starts on `http://localhost:8080`.
-
----
 
 ## API
 
@@ -112,8 +117,6 @@ Returns the execution including current `status`, `output`, and `error`.
 GET /executions
 ```
 
----
-
 ## Example
 
 **Submit:**
@@ -148,7 +151,3 @@ curl -s http://localhost:8080/executions/<id> | python3 -m json.tool
 ```
 
 ---
-
-## Resource constraints
-
-The `cpuCount` and `memoryMb` values in the request are enforced directly on the Docker container using Docker's `--cpus` and `--memory` flags. If not specified, defaults are 1 CPU and 512MB.
