@@ -75,8 +75,6 @@ sudo systemctl daemon-reload
 sudo systemctl restart docker
 ```
 
----
-
 ## Running
 
 ```bash
@@ -84,8 +82,6 @@ mvn spring-boot:run
 ```
 
 The service starts on `http://localhost:8080`.
-
----
 
 ## API
 
